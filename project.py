@@ -46,12 +46,14 @@ try:
     bond_data = yf.Ticker(bond_symbol).history(period="1y")
 
     # Binance API for Crypto
-    url = f"https://api.binance.com/api/v3/klines?symbol={crypto_symbol}&interval=1d&limit=365"
-    res = requests.get(url).json()
-    crypto_df = pd.DataFrame(res, columns=[
-        "Open Time", "Open", "High", "Low", "Close", "Vol",
-        "CT", "QV", "NT", "TB", "TQ", "I"
-    ])
+    crypto_df = yf.Ticker("BTC-USD").history(period="1y")
+
+    # Safety check
+    if crypto_df.empty:
+        st.error("Crypto data unavailable.")
+        st.stop()
+
+    crypto_df = crypto_df.dropna()
     crypto_df["Close"] = crypto_df["Close"].astype(float)
 
     # ---------------- PREDICTION FUNCTION ----------------
