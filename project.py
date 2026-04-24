@@ -5,7 +5,6 @@ import numpy as np
 import plotly.graph_objects as go
 from sklearn.linear_model import LinearRegression
 import requests
-from datetime import datetime
 from streamlit_autorefresh import st_autorefresh
 
 # ---------------- PAGE CONFIG ----------------
